@@ -1,28 +1,60 @@
-import java.sql.SQLOutput;
-import java.util.*;//TIP
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
-
 class Maze {
-    void generateGrid(int n, int m) {
-        // Создаем сетку (границы будут стенами)
-        int[][] grid = new int[n][m];
+    private int[][] grid;
+    private int n, m;
+    private Random rand = new Random();
 
-        // Заполняем внутреннюю часть нулями (проходами)
-        for (int i = 1; i < n; i++) {
-            for (int j = 1; j < m; j++) {
-                grid[i][j] = 0;
+    // Directions: up, right, down, left
+    private final int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+    void generatePerfectMaze(int size) {
+        this.n = size;
+        this.m = size;
+        grid = new int[n][m];
+
+        // Initialize all walls
+        for (int[] row : grid) Arrays.fill(row, 1);
+
+        // Start carving from (1,1)
+        carve(1, 1);
+
+        // Create entrance and exit
+        grid[1][0] = 0;
+        grid[n-2][m-1] = 0;
+
+        printMaze();
+    }
+
+    private void carve(int x, int y) {
+        grid[x][y] = 0; // Mark as path
+
+        // Create randomized directions
+        List<int[]> directions = new ArrayList<>();
+        Collections.addAll(directions, dirs);
+        Collections.shuffle(directions, rand);
+
+        for (int[] dir : directions) {
+            int nx = x + dir[0] * 2;
+            int ny = y + dir[1] * 2;
+
+            if (nx > 0 && nx < n-1 && ny > 0 && ny < m-1 && grid[nx][ny] == 1) {
+                grid[x + dir[0]][y + dir[1]] = 0; // Break the wall
+                carve(nx, ny);
             }
         }
+    }
 
-      grid[0][0] = 1;
-        grid[n - 1][m - 1] = 1;
-
-        // Выводим лабиринт
+    private void printMaze() {
         for (int[] row : grid) {
-            System.out.println(Arrays.toString(row));
+            for (int cell : row) {
+                System.out.print(cell == 1 ? "#" : " ");
+            }
+            System.out.println();
         }
     }
 }
@@ -30,6 +62,6 @@ class Maze {
 class Main {
     public static void main(String[] args) {
         Maze maze = new Maze();
-        maze.generateGrid(21, 21);
+        maze.generatePerfectMaze(5); // Should be odd number
     }
 }
