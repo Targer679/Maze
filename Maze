@@ -1,0 +1,35 @@
+import java.sql.SQLOutput;
+import java.util.*;//TIP
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+
+class Maze {
+    void generateGrid(int n, int m) {
+        // Создаем сетку (границы будут стенами)
+        int[][] grid = new int[n][m];
+
+        // Заполняем внутреннюю часть нулями (проходами)
+        for (int i = 1; i < n; i++) {
+            for (int j = 1; j < m; j++) {
+                grid[i][j] = 0;
+            }
+        }
+
+      grid[0][0] = 1;
+        grid[n - 1][m - 1] = 1;
+
+        // Выводим лабиринт
+        for (int[] row : grid) {
+            System.out.println(Arrays.toString(row));
+        }
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Maze maze = new Maze();
+        maze.generateGrid(21, 21);
+    }
+}
