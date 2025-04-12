@@ -52,7 +52,7 @@ class Maze {
     private void printMaze() {
         for (int[] row : grid) {
             for (int cell : row) {
-                System.out.print(cell == 1 ? "#" : " ");
+                System.out.print(cell == 1 ? "██" : "  ");
             }
             System.out.println();
         }
