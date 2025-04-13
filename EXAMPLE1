@@ -1,0 +1,25 @@
+class Main {
+    public static void main(String[] args) {
+        Maze maze = new Maze();
+        maze.generatePerfectMaze(5); // INPUT
+    }
+}
+
+OUTPUT:
+██████████
+    ██  ██
+██  ██  ██
+██        
+██████████
+Do you want the maze to be solved? 
+1-Yes
+0-No
+
+1
+██████████
+****██  ██
+██**██  ██
+██********
+██████████
+
+Process finished with exit code 0
