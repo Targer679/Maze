@@ -66,7 +66,20 @@ class Maze {
             System.out.println();
         }
     }
-
+    private void printSolution(int[][] originalGrid) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == 2) {
+                    System.out.print("◉◉"); // Solution path
+                } else if (originalGrid[i][j] == 0) {
+                    System.out.print("  "); // Path
+                } else {
+                    System.out.print("██"); // Wall
+                }
+            }
+            System.out.println();
+        }
+    }
     private boolean solve(int x, int y) {
         // Mark as part of solution path
         grid[x][y] = 2;
