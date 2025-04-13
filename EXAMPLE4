@@ -1,0 +1,8 @@
+class Main {
+    public static void main(String[] args) {
+        Maze maze = new Maze();
+        maze.generatePerfectMaze(2); // INPUT
+    }
+}
+OUTPUT:
+Invalid maze size. Enter at least 5.
