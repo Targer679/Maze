@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
@@ -19,33 +20,37 @@ class Maze {
         this.n = size;
         this.m = size;
         grid = new int[n][m];
+        if(size < 5){
+            System.out.println("Invalid maze size. Enter at least 5.");
+        }
+        if(size >=5) {
+            // Initialize all walls
+            for (int[] row : grid) Arrays.fill(row, 1);
 
-        // Initialize all walls
-        for (int[] row : grid) Arrays.fill(row, 1);
+            // Start carving from (1,1)
+            carve(1, 1);
 
-        // Start carving from (1,1)
-        carve(1, 1);
+            // Create entrance and exit
+            grid[1][0] = 0;
+            grid[n - 2][m - 1] = 0;
 
-        // Create entrance and exit
-        grid[1][0] = 0;
-        grid[n - 2][m - 1] = 0;
+            printMaze();
+            System.out.println("Do you want the maze to be solved? ");
+            System.out.println("1-Yes\n0-No");
+            int b = input.nextInt();
+            if (b == 1) {
+                // Create a copy to preserve the original maze
+                int[][] originalGrid = new int[n][m];
+                for (int i = 0; i < n; i++) {
+                    System.arraycopy(grid[i], 0, originalGrid[i], 0, m);
+                }
 
-        printMaze();
-        System.out.println("Do you want the maze to be solved? ");
-        System.out.println("1-Yes\n0-No");
-        int b = input.nextInt();
-        if (b == 1) {
-            // Create a copy to preserve the original maze
-            int[][] originalGrid = new int[n][m];
-            for (int i = 0; i < n; i++) {
-                System.arraycopy(grid[i], 0, originalGrid[i], 0, m);
+                // Solve the maze
+                solve(1, 1);
+
+                // Print the solution
+                printSolution(originalGrid);
             }
-
-            // Solve the maze
-            solve(1, 1);
-
-            // Print the solution
-            printSolution(originalGrid);
         }
     }
 
@@ -81,7 +86,7 @@ class Maze {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (grid[i][j] == 2) {
-                    System.out.print("◉◉"); // Solution path
+                    System.out.print("**"); // Solution path
                 } else if (originalGrid[i][j] == 0) {
                     System.out.print("  "); // Path
                 } else {
@@ -95,6 +100,8 @@ class Maze {
     private boolean solve(int x, int y) {
         // Mark as part of solution path
         grid[x][y] = 2;
+        grid[1][0]=2;
+        grid[n - 2][m - 1]=2;
 
         // Check if we've reached the exit
         if (x == n - 2 && y == m - 2) {
@@ -120,17 +127,17 @@ class Maze {
     }
 }
 
- class Main {
+class Main {
     public static void main(String[] args) {
         Maze maze = new Maze();
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the size of the maze: ");
+        System.out.println("Enter the size of the maze:");
         int n = input.nextInt();
-        if(n>=5) {
-            maze.generatePerfectMaze(n);
+        if(n>=5 && n%2!=0) {
+            maze.generatePerfectMaze(n); // Should be odd number
         }
-        else if(n<5) {
-            System.out.println("Invalid input. Enter at least 5.");
+        else{
+            System.out.println("Invalid input.");
         }
     }
 }
