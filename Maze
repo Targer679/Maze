@@ -11,7 +11,7 @@ class Maze {
     private int n, m;
     private Random rand = new Random();
     private Scanner input = new Scanner(System.in);
-    private boolean solved = false;
+  
 
     // Directions: up, right, down, left
     private final int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
