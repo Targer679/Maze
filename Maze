@@ -127,7 +127,7 @@ class Maze {
         System.out.println("Enter the size of the maze: ");
         int n = input.nextInt();
         if(n>=5) {
-            maze.generatePerfectMaze(23);
+            maze.generatePerfectMaze(n);
         }
         else if(n<5) {
             System.out.println("Invalid input. Enter at least 5.");
