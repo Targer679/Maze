@@ -17,6 +17,9 @@ class Maze {
     private final int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
     void generatePerfectMaze(int size) {
+        if (size % 2 == 0) {
+            size += 1;
+        }
         this.n = size;
         this.m = size;
         grid = new int[n][m];
@@ -133,11 +136,11 @@ class Main {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter the size of the maze:");
         int n = input.nextInt();
-        if(n>=5 && n%2!=0) {
+        if(n>=5 ) {
             maze.generatePerfectMaze(n); // Should be odd number
         }
         else{
-            System.out.println("Invalid input.");
+            System.out.println("Invalid input. Enter at least 5");
         }
     }
 }
